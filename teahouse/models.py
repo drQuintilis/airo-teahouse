@@ -17,7 +17,7 @@ class MenuItem(models.Model):
         verbose_name='Цена',
     )
     image = models.ImageField(
-        verbose_name='Картинка'
+        verbose_name='Картинка',
     )
 
     def __str__(self):
