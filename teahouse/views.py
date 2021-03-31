@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from teahouse.models import MenuItem
+from django.shortcuts import render, redirect
+
+from teahouse.forms import ResponseForm
+from teahouse.models import MenuItem, ResponseItem
 
 # Create your views here.
 
@@ -12,3 +14,16 @@ def about(request):
 def menu(request):
     menu_items = MenuItem.objects.values()
     return render(request, 'teahouse/menu.html', {'menu_items': menu_items})
+
+def reviews(request):
+    if request.method == "POST":
+        form = ResponseForm(request.POST)
+        form.save(commit=True)
+        return redirect('reviews')
+    else:
+        form = ResponseForm()
+        reviews_list = ResponseItem.objects.values()
+        return render(request, 'teahouse/reviews.html', {
+            'reviews': reviews_list,
+            'form': form,
+        })
